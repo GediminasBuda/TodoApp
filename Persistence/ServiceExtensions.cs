@@ -32,8 +32,8 @@ namespace Persistence
                 .AddServer("localhost")
                 .AddPort(3306)
                 .AddUserId("root")
-                .AddPassword("testas")
-                .AddDatabase("LearningSQL")
+                .AddPassword("root")
+                .AddDatabase("todoapiapp")
                 .BuildConnectionString(true);
             
             return services.AddTransient<ISqlClient>(_ => new SqlClient(connectionString));
