@@ -29,8 +29,11 @@ namespace Persistence
         {
             /*var fluentConnectionStringBuilder = new FluentConnectionStringBuilder();*/
 
-            var connectionString = configuration.GetSection("ConnectionStrings")["SqlConnectionString"];
-            
+            /*var connectionString = configuration.GetSection("ConnectionStrings")["SqlConnectionString"];*/ //pirmas budas
+            /*var connectionString = configuration.GetSection("ConnectionStrings").
+                                                    GetSection("SqlConnectionString").Value;*/ // antras budas
+            var connectionString = configuration.GetSection("ConnectionStrings:SqlConnectionString").Value; // trecias budas
+
             return services.AddTransient<ISqlClient>(_ => new SqlClient(connectionString));
         }
     }

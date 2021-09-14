@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Persistence;
+using RestAPI.Options;
 
 namespace RestAPI
 {
@@ -21,7 +22,9 @@ namespace RestAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var connectionString = Configuration.GetSection("ConnectionString")["SqlConnectionString"];
+            var favQSettingsSection = Configuration.GetSection("FavQ");
+            services.Configure<FavQ>(favQSettingsSection);
+
             services.AddControllers().AddJsonOptions(options =>
             {
                 options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());

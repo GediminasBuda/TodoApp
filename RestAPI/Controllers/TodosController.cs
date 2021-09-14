@@ -6,8 +6,10 @@ using Contracts.Enums;
 using Contracts.Models.RequestModels;
 using Contracts.Models.ResponseModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using Persistence.Models.ReadModels;
 using Persistence.Repositories;
+using RestAPI.Options;
 
 namespace RestAPI.Controllers
 {
@@ -16,10 +18,12 @@ namespace RestAPI.Controllers
     public class TodosController : ControllerBase
     {
         private readonly ITodosRepository _todosRepository;
+        private readonly FavQ _favQSettings;
 
-        public TodosController(ITodosRepository todosRepository)
+        public TodosController(ITodosRepository todosRepository, IOptions<FavQ> favQSettings)
         {
             _todosRepository = todosRepository;
+            _favQSettings = favQSettings.Value;
         }
 
         [HttpGet]
