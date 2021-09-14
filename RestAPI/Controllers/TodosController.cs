@@ -75,14 +75,14 @@ namespace RestAPI.Controllers
 
             todoItem.Title = request.Title;
             todoItem.Description = request.Description;
-            /*todoItem.IsDone = request.IsDone;*/
 
             await _todosRepository.SaveOrUpdateAsync(todoItem);
 
             return todoItem.MapToTodoItemResponse();
         }
+
         [HttpPatch]
-        [Route("{id}/status")]
+        [Route("{id}/toggleStatus")]
         public async Task<ActionResult<TodosItemResponse>> UpdateStatus(Guid id)
         {
             var todoItem = await _todosRepository.GetAsync(id);
@@ -93,11 +93,13 @@ namespace RestAPI.Controllers
             }
 
             todoItem.IsDone = !todoItem.IsDone;
-
+            
             await _todosRepository.SaveOrUpdateAsync(todoItem);
 
             return todoItem.MapToTodoItemResponse();
         }
+        
+
         [HttpDelete]
         [Route("{id}")]
         public async Task<IActionResult> Delete(Guid id)
