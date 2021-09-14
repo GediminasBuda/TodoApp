@@ -27,15 +27,9 @@ namespace Persistence
 
         private static IServiceCollection AddSqlClient(this IServiceCollection services, IConfiguration configuration)
         {
-            var fluentConnectionStringBuilder = new FluentConnectionStringBuilder();
-            
-            var connectionString = fluentConnectionStringBuilder
-                .AddServer("localhost")
-                .AddPort(3306)
-                .AddUserId("root")
-                .AddPassword("root")
-                .AddDatabase("todoapiapp")
-                .BuildConnectionString(true);
+            /*var fluentConnectionStringBuilder = new FluentConnectionStringBuilder();*/
+
+            var connectionString = configuration.GetSection("ConnectionStrings")["SqlConnectionString"];
             
             return services.AddTransient<ISqlClient>(_ => new SqlClient(connectionString));
         }

@@ -82,7 +82,7 @@ namespace RestAPI.Controllers
         }
 
         [HttpPatch]
-        [Route("{id}/toggleStatus")]
+        [Route("{id}/status")]
         public async Task<ActionResult<TodosItemResponse>> UpdateStatus(Guid id)
         {
             var todoItem = await _todosRepository.GetAsync(id);
