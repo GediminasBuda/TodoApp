@@ -1,0 +1,37 @@
+﻿<Properties StartupConfiguration="{09A44F2E-F9D4-4052-8AAB-EE92E27BB5AF}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Persistence/Models/ReadModels/ApiKeyReadModel.cs">
+    <Files>
+      <File FileName="RestAPI/Attributes/ApiKeyAttribute.cs" Line="1" Column="1" />
+      <File FileName="Persistence/Models/ReadModels/ApiKeyReadModel.cs" Line="19" Column="1" />
+      <File FileName="Persistence/Models/ReadModels/TodoItemReadModel.cs" Line="1" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="TodosApp" expanded="True">
+            <Node name="Contracts" expanded="True" />
+            <Node name="Persistence" expanded="True">
+              <Node name="Models" expanded="True">
+                <Node name="ReadModels" expanded="True">
+                  <Node name="ApiKeyReadModel.cs" selected="True" />
+                </Node>
+              </Node>
+            </Node>
+            <Node name="RestAPI" expanded="True">
+              <Node name="Attributes" expanded="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.RestAPI PreferredExecutionTarget="/Applications/Google Chrome.app" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches>
+    <Watch file="../../../../../../OnlineTutorials/OnlineTutorial/OnlineTutorial1/Program.cs" line="10" column="20" endLine="10" endColumn="21" offsetX="-1" offsetY="-1" expression="j" liveUpdate="False" />
+  </MonoDevelop.Ide.DebuggingService.PinnedWatches>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
