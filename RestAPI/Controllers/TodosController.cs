@@ -19,11 +19,13 @@ namespace RestAPI.Controllers
     {
         private readonly ITodosRepository _todosRepository;
         private readonly FavQ _favQSettings;
+        private readonly IUserRepository _userRepository;
 
-        public TodosController(ITodosRepository todosRepository, IOptions<FavQ> favQSettings)
+        public TodosController(ITodosRepository todosRepository, IOptions<FavQ> favQSettings, IUserRepository userRepository)
         {
             _todosRepository = todosRepository;
             _favQSettings = favQSettings.Value;
+            _userRepository = userRepository;
         }
 
         [HttpGet]
