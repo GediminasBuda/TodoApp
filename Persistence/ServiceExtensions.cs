@@ -23,7 +23,7 @@ namespace Persistence
         {
             return services
                 .AddSingleton<ITodosRepository, TodosRepository>()
-                .AddSingleton<IUsersRepository, UsersRepository>()
+                .AddSingleton<IUserRepository, UserRepository>()
                 .AddSingleton<IApiKeysRepository, ApiKeysRepository>();
         }
 

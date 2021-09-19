@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Persistence.Repositories
 {
-    public interface IUsersRepository
+    public interface IUserRepository
     {
         Task<UserReadModel> GetAsync(string username);
         Task<UserReadModel> GetAsync(string username, string password);

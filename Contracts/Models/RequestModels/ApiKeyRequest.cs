@@ -4,13 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Persistence.Models.ReadModels
+namespace Contracts.Models.RequestModels
 {
-    public class UserReadModel
+    public class ApiKeyRequest
     {
-        public Guid Id { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
-        public DateTime DateCreated { get; set; }
     }
 }

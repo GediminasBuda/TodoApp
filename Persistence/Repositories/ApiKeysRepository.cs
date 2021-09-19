@@ -16,7 +16,7 @@ namespace Persistence.Repositories
         {
             _sqlClient = sqlClient;
         }
-        public Task<IEnumerable<ApiKeyReadModel>> GetAsync(Guid userId)
+        public Task<IEnumerable<ApiKeyReadModel>> GetByUserIdAsync(Guid userId)
         {
             var sql = $"SELECT * FROM {TableName} WHERE Username = @Username";
             return _sqlClient.QueryAsync<ApiKeyReadModel>(sql, new
@@ -26,7 +26,7 @@ namespace Persistence.Repositories
 
         }
 
-        public Task<ApiKeyReadModel> GetAsync(string apiKey)
+        public Task<ApiKeyReadModel> GetByApiKeyAsync(string apiKey)
         {
             var sql = $"SELECT * FROM {TableName} WHERE Username = @Username";
             return _sqlClient.QuerySingleOrDefaultAsync<ApiKeyReadModel>(sql, new
@@ -48,6 +48,16 @@ namespace Persistence.Repositories
             { 
                 Id =id,
                 IsActive = isActive
+            });
+        }
+
+        public Task<ApiKeyReadModel> GetByApiKeyIdAsync(Guid id)
+        {
+            var sql = $"SELECT * FROM {TableName} WHERE Id = @Id";
+
+            return _sqlClient.QuerySingleOrDefaultAsync<ApiKeyReadModel>(sql, new
+            {
+                Id = id
             });
         }
     }

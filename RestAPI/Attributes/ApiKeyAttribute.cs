@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Mvc;
+using Persistence.Repositories;
 
 namespace RestAPI.Attributes
 {
@@ -21,7 +22,7 @@ namespace RestAPI.Attributes
                    return;
 	           }
 
-            var usersRepository = context.HttpContext.RequestServices.GetService<IUsersRepository>();
+            var usersRepository = context.HttpContext.RequestServices.GetService<IUserRepository>();
             await next();
         }
     }

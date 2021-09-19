@@ -9,8 +9,9 @@ namespace Persistence.Repositories
 {
     public interface IApiKeysRepository
     {
-        Task<IEnumerable<ApiKeyReadModel>> GetAsync(Guid userId);
-        Task<ApiKeyReadModel> GetAsync(string apiKey);
+        Task<IEnumerable<ApiKeyReadModel>> GetByUserIdAsync(Guid userId);
+        Task<ApiKeyReadModel> GetByApiKeyIdAsync(Guid id);
+        Task<ApiKeyReadModel> GetByApiKeyAsync(string apiKey);
         Task<int> SaveAsync(ApiKeyReadModel model);
         Task<int> UpdateIsActive(Guid id, bool isActive);
     }

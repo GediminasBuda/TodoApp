@@ -7,10 +7,15 @@ using System.Threading.Tasks;
 
 namespace Persistence.Repositories
 {
-   public class UsersRepository : IUsersRepository
+   public class UserRepository : IUserRepository
     {
         private readonly ISqlClient _sqlClient;
         private const string TableName = "users";
+
+        public UserRepository(ISqlClient sqlClient)
+        {
+            _sqlClient = sqlClient;
+        }
         public Task<UserReadModel> GetAsync(string username, string password)
         {
             var sql = $"SELECT * FROM {TableName} WHERE Username = @Username AND Password = @Password";
