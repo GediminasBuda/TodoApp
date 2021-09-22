@@ -7,6 +7,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Persistence;
 using RestAPI.Options;
+using RestAPI.Services;
+using RestAPI.SwaggerSettings;
 
 namespace RestAPI
 {
@@ -25,6 +27,8 @@ namespace RestAPI
             var favQSettingsSection = Configuration.GetSection("FavQ");
             services.Configure<FavQ>(favQSettingsSection);
 
+            services.Configure<ApiKeySettings>(Configuration.GetSection("ApiKeySettings"));// here 
+
             services.AddControllers().AddJsonOptions(options =>
             {
                 options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
@@ -32,9 +36,14 @@ namespace RestAPI
             });
             
             services.AddPersistence(Configuration);
-            services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo { Title = "RestAPI", Version = "v1" }); });
+            services.AddSwaggerGen(options => 
+            { 
+                options.SwaggerDoc("v1", new OpenApiInfo { Title = "RestAPI", Version = "v1" });
+                options.OperationFilter<AddHeaderParameter>();
+            });
 
             services.AddCors();
+            services.AddSingleton<IApiKeyService, ApiKeyService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

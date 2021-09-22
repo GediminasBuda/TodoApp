@@ -22,7 +22,30 @@ namespace RestAPI.Attributes
                    return;
 	           }
 
-            var usersRepository = context.HttpContext.RequestServices.GetService<IUserRepository>();
+            
+            var apiKeyRepository = context.HttpContext.RequestServices.GetService<IApiKeysRepository>();
+            var apiKeyModel = await apiKeyRepository!.GetByApiKeyAsync(apiKey);
+
+            if (apiKeyModel is null)
+            {
+                context.Result = new NotFoundObjectResult("ApiKey was not found");
+                return;
+            }
+
+            if (!apiKeyModel.IsActive)
+            {
+                context.Result = new UnauthorizedObjectResult("ApiKey is not active");
+                return;
+            }
+
+            if (apiKeyModel.ExpirationDate <= DateTime.Now)
+            {
+                context.Result = new UnauthorizedObjectResult("ApiKey is expired");
+                return;
+            }
+
+            context.HttpContext.Items.Add("userId", apiKeyModel.UserId);
+
             await next();
         }
     }

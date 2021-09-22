@@ -9,38 +9,42 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Persistence.Models.ReadModels;
 using Persistence.Repositories;
+using RestAPI.Attributes;
 using RestAPI.Options;
 
 namespace RestAPI.Controllers
 {
+    [ApiKey]
     [ApiController]
     [Route("todos")]
     public class TodosController : ControllerBase
     {
         private readonly ITodosRepository _todosRepository;
-        private readonly FavQ _favQSettings;
+        
         private readonly IUserRepository _userRepository;
 
-        public TodosController(ITodosRepository todosRepository, IOptions<FavQ> favQSettings, IUserRepository userRepository)
+        public TodosController(ITodosRepository todosRepository, IUserRepository userRepository)
         {
             _todosRepository = todosRepository;
-            _favQSettings = favQSettings.Value;
+           
             _userRepository = userRepository;
         }
 
         [HttpGet]
-        public async Task<IEnumerable<TodosItemResponse>> GetAll()
+        public async Task<ActionResult<IEnumerable<TodosItemResponse>>> GetAll()
         {
-            var todos = await _todosRepository.GetAllAsync();
+            var userId = (Guid) HttpContext.Items["userId"];// gets UserID from users 
+            var todos = await _todosRepository.GetAllAsync(userId);
 
-            return todos.Select(todo => todo.MapToTodoItemResponse());
+            return new ActionResult<IEnumerable<TodosItemResponse>>(todos.Select(todo => todo.MapToTodoItemResponse()));
         }
 
         [HttpGet]
         [Route("{id}")]
         public async Task<ActionResult<TodosItemResponse>> Get(Guid id)
         {
-            var todoItem = await _todosRepository.GetAsync(id);
+            var userId = (Guid)HttpContext.Items["userId"];
+            var todoItem = await _todosRepository.GetAsync(id, userId);
 
             if (todoItem is null)
             {
@@ -53,9 +57,11 @@ namespace RestAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<TodosItemResponse>> Create(CreateTodoItemRequest request)
         {
+            var userId = (Guid) HttpContext.Items["userId"];
             var todoItemReadModel = new TodoItemReadModel
             {
                 Id = Guid.NewGuid(),
+                UserId = userId,
                 Title = request.Title,
                 Description = request.Description,
                 Difficulty = request.Difficulty,
@@ -63,7 +69,12 @@ namespace RestAPI.Controllers
                 DateCreated = DateTime.Now
             };
 
-            await _todosRepository.SaveOrUpdateAsync(todoItemReadModel);
+            var rowsAffected = await _todosRepository.SaveOrUpdateAsync(todoItemReadModel);
+
+            if (rowsAffected > 1)
+            {
+                throw new Exception("Something went wrong");
+            }
 
             return CreatedAtAction(nameof(Get), new { todoItemReadModel.Id }, todoItemReadModel.MapToTodoItemResponse());
         }
@@ -72,7 +83,8 @@ namespace RestAPI.Controllers
         [Route("{id}")]
         public async Task<ActionResult<TodosItemResponse>> Update(Guid id, UpdateTodoItemRequest request)
         {
-            var todoItem = await _todosRepository.GetAsync(id);
+            var userId = (Guid) HttpContext.Items["userId"];
+            var todoItem = await _todosRepository.GetAsync(id, userId);
 
             if (todoItem is null)
             {
@@ -91,7 +103,8 @@ namespace RestAPI.Controllers
         [Route("{id}/status")]
         public async Task<ActionResult<TodosItemResponse>> UpdateStatus(Guid id)
         {
-            var todoItem = await _todosRepository.GetAsync(id);
+            var userId = (Guid) HttpContext.Items["userId"];
+            var todoItem = await _todosRepository.GetAsync(id, userId);
 
             if (todoItem is null)
             {
@@ -110,7 +123,8 @@ namespace RestAPI.Controllers
         [Route("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            var todoItem = await _todosRepository.GetAsync(id);
+            var userId = (Guid) HttpContext.Items["userId"];
+            var todoItem = await _todosRepository.GetAsync(id, userId);
 
             if (todoItem is null)
             {

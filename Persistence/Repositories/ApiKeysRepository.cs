@@ -18,7 +18,7 @@ namespace Persistence.Repositories
         }
         public Task<IEnumerable<ApiKeyReadModel>> GetByUserIdAsync(Guid userId)
         {
-            var sql = $"SELECT * FROM {TableName} WHERE Username = @Username";
+            var sql = $"SELECT * FROM {TableName} WHERE UserId = @UserId";
             return _sqlClient.QueryAsync<ApiKeyReadModel>(sql, new
             {
                 UserId = userId
@@ -28,7 +28,7 @@ namespace Persistence.Repositories
 
         public Task<ApiKeyReadModel> GetByApiKeyAsync(string apiKey)
         {
-            var sql = $"SELECT * FROM {TableName} WHERE Username = @Username";
+            var sql = $"SELECT * FROM {TableName} WHERE ApiKey = @ApiKey";
             return _sqlClient.QuerySingleOrDefaultAsync<ApiKeyReadModel>(sql, new
             {
                 ApiKey = apiKey

@@ -6,6 +6,7 @@ namespace Contracts.Models.ResponseModels
     public class TodosItemResponse
     {
         public Guid Id { get; set; }
+        public Guid UserId { get; set; }
 
         public string Title { get; set; }
 
