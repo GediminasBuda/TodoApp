@@ -28,6 +28,7 @@ namespace RestAPI
             services.Configure<FavQ>(favQSettingsSection);
 
             services.Configure<ApiKeySettings>(Configuration.GetSection("ApiKeySettings"));// here 
+            services.Configure<SqlConnectionSettings>(Configuration.GetSection("SqlConnectionSettings"));
 
             services.AddControllers().AddJsonOptions(options =>
             {

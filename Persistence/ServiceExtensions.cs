@@ -4,10 +4,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Persistence.Repositories;
 
+
 namespace Persistence
 {
     public static class ServiceExtensions
     {
+       
         public static IServiceCollection AddPersistence(this IServiceCollection services, IConfiguration configuration)
         {
             SqlMapper.AddTypeHandler(new MySqlGuidTypeHandler());
@@ -34,9 +36,10 @@ namespace Persistence
             /*var connectionString = configuration.GetSection("ConnectionStrings")["SqlConnectionString"];*/ //pirmas budas
             /*var connectionString = configuration.GetSection("ConnectionStrings").
                                                     GetSection("SqlConnectionString").Value;*/ // antras budas
-            var connectionString = configuration.GetSection("ConnectionStrings:SqlConnectionString").Value; // trecias budas
+            var connectionString = configuration.GetSection("SqlConnectionSettings:SqlConnectionString").Value; // trecias budas
 
             return services.AddTransient<ISqlClient>(_ => new SqlClient(connectionString));
         }
+
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RestAPI.Services
 {
-    interface IApiKeyService
+    public interface IApiKeyService
     {
         Task<ApiKey> CreateApiKey(string username, string password);
 
